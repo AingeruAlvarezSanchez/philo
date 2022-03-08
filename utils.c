@@ -1,5 +1,14 @@
 #include "philo.h"
 #include <stdio.h>
+#include <sys/time.h>
+
+int	ft_time(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+ }
 
 int	ft_checknumeric(const char *str)
 {

@@ -19,7 +19,7 @@ $(NAME): $(OBJS)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
-	@echo "OBJECTS CREATED"
+	@echo "OBJECT CREATED"
 
 clean:
 	@$(RM) $(OBJS)

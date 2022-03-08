@@ -1,13 +1,16 @@
 #include "philo.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void	*ft_routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = arg;
-	printf("Im philo n: %d\n", philo->id);
+	philo->eaten = 0;
+	if (philo->id % 2 == 1)
+		usleep(2000);
 	return (NULL);
 }
 
@@ -19,6 +22,7 @@ int	ft_create_threads(t_data *data)
 	philo = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
 	if (!philo)
 		return (1);
+	data->time = ft_time();
 	i = -1;
 	while (++i < data->n_philos)
 	{
