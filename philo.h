@@ -13,6 +13,11 @@ typedef struct s_data {
 	pthread_mutex_t	dead;
 }	t_data;
 
+typedef struct s_philo {
+	int	id;
+	t_data	*data;
+}	t_philo;
+
 int	ft_initials(int argc, char **argv, t_data *data);
 int	ft_atoi(const char *str);
 

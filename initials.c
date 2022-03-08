@@ -6,13 +6,16 @@ int	ft_initvalues(t_data *data)
 {
 	int	i;
 
-	data->th = (pthread_t *)malloc(sizeof(pthread_t) * data->n_philos + 1);
+	data->th = (pthread_t *)malloc(sizeof(pthread_t) * data->n_philos);
 	if (!data->th)
 		return (1);
 	data->fork = (pthread_mutex_t *)
 		malloc(sizeof(pthread_mutex_t) * data->n_philos);
 	if (!data->fork)
+	{
+		free(data->th);
 		return (1);
+	}
 	i = -1;
 	while (++i < data->n_philos)
 		pthread_mutex_init(&data->fork[i], NULL);
