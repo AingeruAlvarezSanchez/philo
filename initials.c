@@ -20,6 +20,7 @@ int	ft_initvalues(t_data *data)
 	while (++i < data->n_philos)
 		pthread_mutex_init(&data->fork[i], NULL);
 	pthread_mutex_init(&data->dead, NULL);
+	pthread_mutex_init(&data->print, NULL);
 	data->died = 0;
 	return (0);
 }

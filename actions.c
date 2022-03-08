@@ -11,7 +11,7 @@ int	ft_isdead(t_philo *philo)
 		printf("%d Philo %d died\n",
 			(ft_time() - philo->data->time), philo->id);
 		philo->data->died = 1;
-		//pthread_mutex_unlock(&philo->data->dead);
+		pthread_mutex_unlock(&philo->data->dead);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->data->dead);

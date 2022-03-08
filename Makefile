@@ -6,7 +6,7 @@ FILES = philo		\
 	actions
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3 -pthread
+FLAGS = -Wall -Werror -Wextra -pthread #-fsanitize=address -g3
 RM = rm -rf
 
 SRCS = $(addsuffix .c, $(FILES))
