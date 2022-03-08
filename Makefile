@@ -2,7 +2,8 @@ SHELL = /bin/sh
 NAME = philo
 FILES = philo		\
 	initials	\
-	utils
+	utils		\
+	actions
 
 CC = cc
 FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3 -pthread

@@ -11,6 +11,16 @@ void	*ft_routine(void *arg)
 	philo->eaten = 0;
 	if (philo->id % 2 == 1)
 		usleep(2000);
+	while (1)
+	{
+		if (philo->data->died)
+			return (NULL);
+		if (ft_isdead(philo))
+			return (NULL);
+		if (!philo->data->died)
+			printf("%d Philo %d is thinking\n",
+				(ft_time() - philo->data->time), philo->id);
+	}
 	return (NULL);
 }
 

@@ -24,5 +24,6 @@ typedef struct s_philo {
 int	ft_initials(int argc, char **argv, t_data *data);
 int	ft_atoi(const char *str);
 int	ft_time(void);
+int	ft_isdead(t_philo *philo);
 
 #endif
