@@ -28,6 +28,7 @@ void	*ft_routine(void *arg)
 	while (1)
 	{
 		ft_eating(philo);
+		ft_sleep(philo);
 		printstatus(philo, "is sleeping");// es que me daba pereza hacer una funcion de sleeping
 		ft_usleep(philo->data->t_sleep);
 		//if (philo->data->died)

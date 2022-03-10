@@ -17,3 +17,8 @@ int	ft_isdead(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->dead);
 	return (0);
 }
+
+int	ft_sleep(t_philo *philo)
+{
+	
+}
