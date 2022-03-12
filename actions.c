@@ -27,6 +27,12 @@ void	ft_eating(t_philo *philo)
 		return ;
 	}
 	ft_printstatus(philo, "has taken a fork");
+	if (philo->data->n_philos == 1)
+	{
+		ft_usleep(philo->data->t_die - (ft_time() - philo->time));
+		ft_printstatus(philo, "died");
+		return ;
+	}
 	pthread_mutex_lock(&philo->data->fork[philo->rf]);
 	ft_isdead(philo);
 	if (philo->data->died)
@@ -53,8 +59,18 @@ void	ft_eating(t_philo *philo)
 		return ;
 	}
 	philo->time = ft_time();
+	if (philo->data->m_eat != 0)
+		philo->eaten += 1;
+	if (philo->eaten == philo->data->m_eat && philo->data->m_eat != 0)
+		philo->data->eaten += 1;
 	pthread_mutex_unlock(&philo->data->fork[philo->lf]);
 	pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+	if (philo->data->eaten == philo->data->n_philos)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->lf]);
+		pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+		return ;
+	}
 }
 
 void	ft_sleep(t_philo *philo)

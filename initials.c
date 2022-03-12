@@ -22,6 +22,7 @@ static int	ft_initvalues(t_data *data)
 	pthread_mutex_init(&data->dead, NULL);
 	pthread_mutex_init(&data->print, NULL);
 	data->died = 0;
+	data->eaten = 0;
 	return (0);
 }
 

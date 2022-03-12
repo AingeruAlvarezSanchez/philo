@@ -18,6 +18,10 @@ static void	*ft_routine(void *arg)
 		if (philo->data->died)
 			return (NULL);
 		ft_eating(philo);
+		if (philo->data->n_philos == 1)
+			return (NULL);
+		if (philo->data->eaten == philo->data->n_philos)
+			return (NULL);
 		ft_isdead(philo);
 		if (philo->data->died)
 			return (NULL);

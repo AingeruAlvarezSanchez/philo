@@ -9,6 +9,7 @@ typedef struct s_data {
 	int		t_sleep;
 	int		m_eat;
 	int		time;
+	int		eaten;
 	pthread_t	*th;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	dead;
