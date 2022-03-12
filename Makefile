@@ -6,7 +6,7 @@ FILES = philo		\
 	actions
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra -pthread #-fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra -pthread -fsanitize=address -g3
 RM = rm -rf
 
 SRCS = $(addsuffix .c, $(FILES))
@@ -18,9 +18,9 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 	@echo "EXECUTABLE CREATED"
 
-%.o: %.c
+%.o: %.c 
 	@$(CC) $(FLAGS) -c $< -o $@
-	@echo "OBJECT CREATED"
+	@echo "OBJECTS CREATED"
 
 clean:
 	@$(RM) $(OBJS)

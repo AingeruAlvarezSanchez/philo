@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	ft_initvalues(t_data *data)
+static int	ft_initvalues(t_data *data)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ int	ft_initvalues(t_data *data)
 	return (0);
 }
 
-int	ft_checkargv(char **argv, t_data *data)
+static int	ft_checkargv(char **argv, t_data *data)
 {
 	data->n_philos = ft_atoi(argv[1]);
 	if (data->n_philos == '0' || data->n_philos == -1)

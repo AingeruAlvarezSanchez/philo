@@ -3,20 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	ft_eating(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->fork[philo->lf]);
-	printstatus(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->data->fork[philo->rf]);
-	printstatus(philo, "has taken a fork");
-	printstatus(philo, "is eating");
-	ft_usleep(philo->data->t_eat);
-	philo->time = ft_time();
-	pthread_mutex_unlock(&philo->data->fork[philo->lf]);
-	pthread_mutex_unlock(&philo->data->fork[philo->rf]);
-}
-
-void	*ft_routine(void *arg)
+static void	*ft_routine(void *arg)
 {
 	t_philo	*philo;
 
@@ -27,21 +14,26 @@ void	*ft_routine(void *arg)
 		ft_usleep(philo->data->t_eat - 20);
 	while (1)
 	{
+		ft_isdead(philo);
+		if (philo->data->died)
+			return (NULL);
 		ft_eating(philo);
+		ft_isdead(philo);
+		if (philo->data->died)
+			return (NULL);
 		ft_sleep(philo);
-		printstatus(philo, "is sleeping");// es que me daba pereza hacer una funcion de sleeping
-		ft_usleep(philo->data->t_sleep);
-		//if (philo->data->died)
-		//	return (NULL);
-		//if (ft_isdead(philo))
-		//	return (NULL);
-		//if (!philo->data->died)
-		//	printstatus(philo, "in thinking");
+		ft_isdead(philo);
+		if (philo->data->died)
+			return (NULL);
+		ft_printstatus(philo, "is thinking");
+		ft_isdead(philo);
+		if (philo->data->died)
+			return (NULL);
 	}
 	return (NULL);
 }
 
-int	ft_create_threads(t_data *data)
+static int	ft_create_threads(t_data *data)
 {
 	t_philo	*philo;
 	int	i;
@@ -49,8 +41,8 @@ int	ft_create_threads(t_data *data)
 	philo = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
 	if (!philo)
 		return (1);
-	data->time = ft_time();
 	i = -1;
+	data->time = ft_time();
 	while (++i < data->n_philos)
 	{
 		philo[i].id = i + 1;

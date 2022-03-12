@@ -1,24 +1,73 @@
 #include "philo.h"
 #include <stdio.h>
 
-int	ft_isdead(t_philo *philo)
+void	ft_isdead(t_philo *philo)
 {
 	if (philo->data->died)
-		return (1);
+		return ;
 	pthread_mutex_lock(&philo->data->dead);
-	if ((ft_time() - philo->data->time) >= philo->data->t_die)
+	if ((ft_time() - philo->time) >= philo->data->t_die)
 	{
-		printf("%d Philo %d died\n",
-			(ft_time() - philo->data->time), philo->id);
+		ft_printstatus(philo, "died");
 		philo->data->died = 1;
 		pthread_mutex_unlock(&philo->data->dead);
-		return (1);
+		return ;
 	}
 	pthread_mutex_unlock(&philo->data->dead);
-	return (0);
 }
 
-int	ft_sleep(t_philo *philo)
+void	ft_eating(t_philo *philo)
 {
-	
+	pthread_mutex_lock(&philo->data->fork[philo->lf]);
+	ft_isdead(philo);
+	if (philo->data->died)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->lf]);
+		pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+		return ;
+	}
+	ft_printstatus(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->data->fork[philo->rf]);
+	ft_isdead(philo);
+	if (philo->data->died)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->lf]);
+		pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+		return ;
+	}
+	ft_printstatus(philo, "has taken a fork");
+	ft_isdead(philo);
+	if (philo->data->died)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->lf]);
+		pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+		return ;
+	}
+	ft_printstatus(philo, "is eating");
+	ft_usleep(philo->data->t_eat);
+	ft_isdead(philo);
+	if (philo->data->died)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->lf]);
+		pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+		return ;
+	}
+	philo->time = ft_time();
+	pthread_mutex_unlock(&philo->data->fork[philo->lf]);
+	pthread_mutex_unlock(&philo->data->fork[philo->rf]);
+}
+
+void	ft_sleep(t_philo *philo)
+{
+	ft_isdead(philo);
+	if (philo->data->died)
+		return ;
+	ft_usleep(philo->data->t_sleep);
+	ft_isdead(philo);
+	if (philo->data->died)
+		return ;
+	ft_printstatus(philo, "is sleeping");
+	ft_isdead(philo);
+	if (philo->data->died)
+		return ;
 }
