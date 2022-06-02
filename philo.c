@@ -1,7 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalvarez <aalvarez@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/02 14:15:41 by aalvarez          #+#    #+#             */
+/*   Updated: 2022/06/02 14:50:16 by aalvarez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+static int	ft_routine2(t_philo *philo)
+{
+	if (philo->data->died)
+		return (1);
+	ft_sleep(philo);
+	ft_isdead(philo);
+	if (philo->data->died)
+		return (1);
+	ft_printstatus(philo, "is thinking");
+	ft_isdead(philo);
+	if (philo->data->died)
+		return (1);
+	return (0);
+}
 
 static void	*ft_routine(void *arg)
 {
@@ -11,7 +38,7 @@ static void	*ft_routine(void *arg)
 	philo->eaten = 0;
 	philo->time = ft_time();
 	if (philo->id % 2 == 1)
-		ft_usleep(philo->data->t_eat - 20);
+		ft_usleep(philo->data->t_eat - 20, philo);
 	while (1)
 	{
 		ft_isdead(philo);
@@ -23,15 +50,7 @@ static void	*ft_routine(void *arg)
 		if (philo->data->eaten == philo->data->n_philos)
 			return (NULL);
 		ft_isdead(philo);
-		if (philo->data->died)
-			return (NULL);
-		ft_sleep(philo);
-		ft_isdead(philo);
-		if (philo->data->died)
-			return (NULL);
-		ft_printstatus(philo, "is thinking");
-		ft_isdead(philo);
-		if (philo->data->died)
+		if (ft_routine2(philo))
 			return (NULL);
 	}
 	return (NULL);
@@ -40,7 +59,7 @@ static void	*ft_routine(void *arg)
 static int	ft_create_threads(t_data *data)
 {
 	t_philo	*philo;
-	int	i;
+	int		i;
 
 	philo = (t_philo *)malloc(sizeof(t_philo) * data->n_philos);
 	if (!philo)
@@ -65,6 +84,7 @@ static int	ft_create_threads(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
+
 	if (ft_initials(argc, argv, &data))
 		return (1);
 	if (ft_create_threads(&data))

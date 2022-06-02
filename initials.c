@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initials.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalvarez <aalvarez@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/02 14:15:31 by aalvarez          #+#    #+#             */
+/*   Updated: 2022/06/02 14:58:25 by aalvarez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,21 +41,25 @@ static int	ft_initvalues(t_data *data)
 static int	ft_checkargv(char **argv, t_data *data)
 {
 	data->n_philos = ft_atoi(argv[1]);
-	if (data->n_philos == '0' || data->n_philos == -1)
+	if (data->n_philos == '0' || data->n_philos == -1 || data->n_philos == -2)
 		return (1);
 	data->t_die = ft_atoi(argv[2]);
-	if (data->t_die == '0' || data->t_die == -1)
+	if (data->t_die == '0' || data->t_die == -1 || data->t_die == -2)
 		return (1);
 	data->t_eat = ft_atoi(argv[3]);
-	if (data->t_eat == '0' || data->t_eat == -1)
+	if (data->t_eat == '0' || data->t_eat == -1 || data->t_eat == -2)
 		return (1);
 	data->t_sleep = ft_atoi(argv[4]);
-	if (data->t_sleep == '0' || data->t_sleep == -1)
+	if (data->t_sleep == '0' || data->t_sleep == -1 || data->t_sleep == -2)
 		return (1);
 	if (!argv[5])
 		data->m_eat = 0;
 	else
+	{
 		data->m_eat = ft_atoi(argv[5]);
+		if (data->m_eat == -2)
+			return (1);
+	}
 	if (ft_initvalues(data))
 		return (1);
 	return (0);
@@ -65,4 +81,3 @@ int	ft_initials(int argc, char **argv, t_data *data)
 		return (1);
 	return (0);
 }
-

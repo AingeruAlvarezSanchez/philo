@@ -1,12 +1,13 @@
 SHELL = /bin/sh
 NAME = philo
 FILES = philo		\
-	initials	\
-	utils		\
-	actions
+		initials	\
+		utils		\
+		actions		\
+		atoi
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra -pthread -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra -pthread #-fsanitize=address -g3
 RM = rm -rf
 
 SRCS = $(addsuffix .c, $(FILES))
